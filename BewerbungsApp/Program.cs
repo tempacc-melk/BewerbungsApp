@@ -301,7 +301,7 @@
                     break;
 
                 case 1:
-                    Console.WriteLine("/******************************************************/\n");
+                    Console.WriteLine("\n/******************************************************/\n");
                     for (int i = 0; i <= 4; i++)
                     {
                         Console.WriteLine(langItems[5 + i]);
