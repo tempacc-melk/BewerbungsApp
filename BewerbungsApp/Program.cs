@@ -1,4 +1,6 @@
-﻿namespace BewerbungsApp
+﻿using System.Diagnostics;
+
+namespace BewerbungsApp
 {
 
     internal class Program
@@ -124,6 +126,7 @@
         }
         private static void ShowAllFunctions()
         {
+            pos = 2;
             Console.Write(langItems[0]);
             string input = CheckInput();
 
@@ -155,6 +158,7 @@
 
         private static void Database ()
         {
+            pos = 3;
             string[] sqlCmd = ["CREATE", "DROP", "SELECT", "UPDATE", "INSERT INTO", "DELETE"];
             string sqlquerey = $"";
             Console.Write(langItems[0]);
@@ -190,19 +194,43 @@
                 Database();
             }
         }
-
         private static void GUI ()
         {
+            pos = 4;
             Console.Write(langItems[0]);
             string input = CheckInput();
 
             if (input == "0")
             {
+                Process[] pname = Process.GetProcessesByName("BewerbungsAppGUI");
+                if (pname.Length == 0)
+                {
+                    PostMessage(31);
+                    Process.Start("GUI/BewerbungsAppGUI.exe");
 
+                    Thread.Sleep(1000);
+                    Return(3);
+                }
+                else
+                {
+                    Console.WriteLine("Process already running");
+                    Console.Write("Close the GUI? Y/N: ");
+                    if (Console.ReadLine()?.ToUpper() == "Y")
+                    {
+                        pname[0].Kill();
+                        Return(3);
+                    }
+                    else
+                    {
+                        Return(3);
+                    }
+                    
+                }
             }
             else if (input == "1")
             {
-
+                Console.WriteLine("placeholder");
+                GUI();
             }
             else
             {
@@ -212,15 +240,17 @@
 
         private static void Communication ()
         {
+            pos = 5;
+            Console.Write(langItems[0]);
+            string input = CheckInput();
+        }
+        private static void Bots ()
+        {
+            pos = 6;
             Console.Write(langItems[0]);
             string input = CheckInput();
         }
 
-        private static void Bots ()
-        {
-            Console.Write(langItems[0]);
-            string input = CheckInput();
-        }
 
         private static string CheckInput ()
         {
@@ -292,8 +322,8 @@
                         ShowAllFunctions();
                         break;
 
-                    case "Z" or "B" or "ZURUCK" or "BACK":
-                        Console.WriteLine("placeholder");
+                    case "Z" or "R" or "ZURUCK" or "RETURN":
+                        Return(pos--);
                         break;
 
                     case "EXIT":
@@ -368,7 +398,7 @@
 
                 case 1:
                     Console.Clear();
-                    Console.WriteLine("\n/************************ MENU ************************/\n");
+                    Console.WriteLine("/************************ MENU ************************/\n");
                     for (int i = 0; i <= 4; i++)
                     {
                         Console.WriteLine(langItems[5 + i]);
@@ -378,7 +408,6 @@
 
                 case 2:
                     Console.Clear();
-                    Console.WriteLine(langItems[6]);
                     Console.WriteLine("/************************ DB **************************/\n");
                     for (int i = 0; i <= 5; i++)
                     {
@@ -389,7 +418,6 @@
 
                 case 3:
                     Console.Clear();
-                    Console.WriteLine(langItems[7]);
                     Console.WriteLine("/************************ GUI *************************/\n");
                     for (int i = 0; i <= 2; i++)
                     {
@@ -398,19 +426,32 @@
                     Console.Write(Environment.NewLine);
                     break;
 
+                case 31:
+                    Console.WriteLine("GUI loaded");
+                    break;
+
                 case 4:
                     Console.Clear();
-                    Console.WriteLine(langItems[8]);
                     Console.WriteLine("/************************ COM *************************/\n");
                     break;
 
                 case 5:
                     Console.Clear();
-                    Console.WriteLine(langItems[9]);
                     Console.WriteLine("/************************ BOT *************************/\n");
                     break;
             }
         }
 
+        private static void Return (int value)
+        {
+            switch (value)
+            {
+                case >= 3 and <= 6:
+                    PostMessage(1);
+                    ShowAllFunctions();
+                    break;
+
+            }
+        }       
     }
 }
