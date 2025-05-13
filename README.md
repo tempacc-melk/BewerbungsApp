@@ -14,9 +14,9 @@ Dient zum starten aller anderen Anwendungen und als Zwischenschnittstelle.
 Mit dieser Funktion kann man eine Datenbank mittels der Konsolle erstellen, lesen, importieren und exportieren (SQL / XML) <br />
 - wip
 
-## GUI v0.0.0| C# / Java  
+## GUI | C# v0.0.1 / Java v0.0.0
 Dient zur Darstellung der Datenbank (C# / Java) <br />
-- wip 
+Eine Kleine Oberfläche mit C# wurde erstellt, jedoch fehlen noch die Funktionen [wip]
 
 ## Kommunikation v0.0.0 | PHP 
 - wip
