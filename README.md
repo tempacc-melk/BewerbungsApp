@@ -1,7 +1,7 @@
 # Allgemeine Infos
 
-Diese App wurde von Melina Kotschetkow erstellt und dient lediglich für Bewerbungszwecke
-Projekt wurde am 25.04.2025 erstellt <br />
+Diese App wurde von Melina Kotschetkow erstellt und dient lediglich für Bewerbungszwecke <br />
+Dieses Projekt wurde am 25.04.2025 erstellt <br />
 
 Apps die verwendet wurden:
 - Microsoft Visual Studio 2022
