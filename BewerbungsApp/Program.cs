@@ -213,7 +213,7 @@ namespace BewerbungsApp
                 }
                 else
                 {
-                    Console.WriteLine("Process already running");
+                    Console.WriteLine("Process already running\n");
                     Console.Write("Close the GUI? Y/N: ");
                     if (Console.ReadLine()?.ToUpper() == "Y")
                     {
@@ -299,7 +299,7 @@ namespace BewerbungsApp
                         } 
                         else
                         {
-                            getLang[1] = getLang[1].Remove(1);
+                            getLang[1] = getLang[1][..1];
                             if (getLang[1] == "d")
                             {
                                 SetLanguage(0);
