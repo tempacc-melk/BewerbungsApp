@@ -361,3 +361,12 @@ MigrationBackup/
 
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
+
+# Ignore custom files
+**/BewerbungsApp.sln
+**/BewerbungsApp.csproj
+**/GUI.csproj
+/BewerbungsApp/GUI/Form1.cs
+/BewerbungsApp/GUI/Form1.Designer.cs
+/BewerbungsApp/GUI/Form1.resx
+/BewerbungsApp/GUI/Program.cs
