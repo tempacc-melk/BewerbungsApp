@@ -213,7 +213,7 @@ namespace BewerbungsApp
                 }
                 else
                 {
-                    Console.WriteLine("Process already running");
+                    Console.WriteLine("Process already running\n");
                     Console.Write("Close the GUI? Y/N: ");
                     if (Console.ReadLine()?.ToUpper() == "Y")
                     {
@@ -284,7 +284,7 @@ namespace BewerbungsApp
 
                     case string when 
                     (checkInput.ToUpper().Contains("SPRACHE ") || checkInput.ToUpper().Contains("LANG ")) && 
-                    (checkInput.Contains("-0") || checkInput.ToUpper().Contains("-DEUTSCH") || checkInput.Contains("-1") || checkInput.ToUpper().Contains("-ENGLISH")):
+                    (checkInput.Contains("-0") || checkInput.ToUpper().Contains("-DE") || checkInput.Contains("-1") || checkInput.ToUpper().Contains("-EN")):
                         string[] getLang = checkInput.Split('-');
                         if (getLang.Length > 2)
                         {
@@ -299,7 +299,7 @@ namespace BewerbungsApp
                         } 
                         else
                         {
-                            getLang[1] = getLang[1].Remove(1);
+                            getLang[1] = getLang[1][..1];
                             if (getLang[1] == "d")
                             {
                                 SetLanguage(0);
@@ -352,7 +352,7 @@ namespace BewerbungsApp
                 " * List of all commands:\n" +
                 " * Lang -VALUE   | Change the language\n" +
                 " * Menu          | Opens the menu with all functions\n" +
-                " * Back          | Jumps back one page\n" +
+                " * Return        | Jumps back one page\n" +
                 " * Exit          | Closes the application\n" +
                 " * ";
             }
