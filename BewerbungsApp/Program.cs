@@ -123,17 +123,7 @@ namespace BewerbungsApp
             {
                 InitializeApp();
             }
-            else
-            {
-                _ = Test();
-                Console.WriteLine("1st Test:_" + Test());
-            }
         }
-        private static string Test ()
-        {
-            return new(" 2nd test");
-        }
-
         private static void ShowAllFunctions()
         {
             pos = 2;
