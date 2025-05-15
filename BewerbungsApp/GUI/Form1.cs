@@ -6,6 +6,7 @@ namespace BewerbungsAppGUI
         {
             InitializeComponent();
 
+            Program.StartListener();
         }
 
         private void button4_Click(object sender, EventArgs e)

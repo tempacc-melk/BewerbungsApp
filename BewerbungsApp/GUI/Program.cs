@@ -27,10 +27,12 @@ namespace BewerbungsAppGUI
             if (tcpv6 != null) 
             {
                 tcpv6.Start();
+                Debug.WriteLine("Started IPv6 listener");
             } 
             else
             {
                 tcpv4.Start();
+                Debug.WriteLine("Started IPv4 listener");
             }
         }
         internal static void CloseListener()
@@ -46,17 +48,17 @@ namespace BewerbungsAppGUI
             {
                 if (tcpv4 != null)
                 {
-                    _ = LoadStream(tcpv4.AcceptTcpClient());
+                    output = LoadStream(tcpv4.AcceptTcpClient());
                 }
                 else
                 {
-                    _ = LoadStream(tcpv6.AcceptTcpClient());
+                    output = LoadStream(tcpv6.AcceptTcpClient());
                 }
 
             }
             catch (SocketException se)
             {
-                output = $"Socket exception: \n{se}";
+                output = $"Socket exception:\n{se}";
             }
 
 
@@ -80,7 +82,7 @@ namespace BewerbungsAppGUI
             }
             catch (IOException ioe)
             {
-                Debug.WriteLine(ioe);
+                output.Append($"IO Exception:\n{ioe}");
             }
             return output.ToString();
         }
