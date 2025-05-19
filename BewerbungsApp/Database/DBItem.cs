@@ -1,15 +1,16 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Serialization;
 
 namespace BewerbungsApp.Database
 {
     internal class DBItem
     {
-        internal static uint _ID;
-        internal static string _Name;
-        internal static string _Email;
-        internal static ushort _Handy;
-        internal static uint _TownPLZ;
-        internal static string _Strasse;
 
         internal static List<string> CreateTempXml()
         {
@@ -68,13 +69,7 @@ namespace BewerbungsApp.Database
         }
 
 
-        private static void AddItemToDatabase (Dictionary<string, string> dir)
         {
-            _Name = dir["Name"];
-            _Email = dir["Email"];
-            _Handy = ushort.Parse(dir["Handy"]);
-            _TownPLZ = uint.Parse(dir["TownPLZ"]);
-            _Strasse = dir["Strasse"];
         }
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System.Diagnostics;
-using BewerbungsApp.Database;
 
 namespace BewerbungsApp
 {
