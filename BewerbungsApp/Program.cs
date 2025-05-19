@@ -1,10 +1,13 @@
 ﻿using System.Diagnostics;
+using BewerbungsApp.Database;
 
 namespace BewerbungsApp
 {
 
     internal class Program
     {
+
+        private static bool gui;
         private static int pos = 0;
         private static List<string> langItems = [];
         private static void SetLanguage(int input) {
@@ -85,6 +88,9 @@ namespace BewerbungsApp
                     break;
             }
         }
+
+        private static readonly string databaseName = "Local DB v0.1";
+        private static Dictionary<List<string>, string> databaseItems;
 
         static void Main()
         {
@@ -171,7 +177,51 @@ namespace BewerbungsApp
             }
             else if (input == "1")
             {
-                // Load
+                PostMessage(21);
+                DBItem.CreateTempXml();
+                if (gui)
+                {
+                    Console.Write(Environment.NewLine);
+                    Console.WriteLine("GUI detected. Do you want to enable auto-update to GUI? Y/N");
+                    Console.Write("Input: ");
+                    if (CheckForYesOrNo(Console.ReadLine()!))
+                    {
+                        // Placeholder
+                    }
+                    else
+                    {
+                        Return(3);
+                    }
+                    
+                } 
+                else
+                {
+                    Console.Write(Environment.NewLine);
+                    Console.WriteLine("GUI not detected. Do you want to start the GUI? Y/N");
+                    Console.Write("Input: ");
+                    if (CheckForYesOrNo(Console.ReadLine()!))
+                    {
+                        Console.WriteLine("Starting GUI C# v0.1");
+                        Process.Start("GUI/BewerbungsAppGUI.exe");
+                        gui = true;
+
+                        Console.WriteLine("Do you want to enable auto-update to GUI? Y/N");
+                        Console.Write("Input: ");
+                        if (CheckForYesOrNo(Console.ReadLine()!))
+                        {
+                            // placeholder
+                        }
+                        else
+                        {
+                            Return(3);
+                        }
+                    }
+                    else
+                    {
+                        Return(3);
+                    }
+                }
+
 
             }
             else if (input == "2")
@@ -207,7 +257,7 @@ namespace BewerbungsApp
                 {
                     PostMessage(31);
                     Process.Start("GUI/BewerbungsAppGUI.exe");
-
+                    gui = true;
                     Thread.Sleep(1000);
                     Return(3);
                 }
@@ -215,9 +265,10 @@ namespace BewerbungsApp
                 {
                     Console.WriteLine("Process already running\n");
                     Console.Write("Close the GUI? Y/N: ");
-                    if (Console.ReadLine()?.ToUpper() == "Y")
+                    if (CheckForYesOrNo(Console.ReadLine()!))
                     {
                         pname[0].Kill();
+                        gui = false;
                         Return(3);
                     }
                     else
@@ -235,6 +286,17 @@ namespace BewerbungsApp
             else
             {
                 GUI();
+            }
+        }
+        private static bool CheckForYesOrNo (string input)
+        {
+            if (input == string.Empty)
+            {
+                return false;
+            } 
+            else
+            {
+                return input.ToUpper().Contains('Y', StringComparison.CurrentCultureIgnoreCase) ? true : false;
             }
         }
 
@@ -414,6 +476,12 @@ namespace BewerbungsApp
                         Console.WriteLine(langItems[10 + i]);
                     }
                     Console.Write(Environment.NewLine);
+                    break;
+
+                case 21:
+                    Console.Clear();
+                    Console.WriteLine("/************************ DB **************************/\n");
+                    Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
                     break;
 
                 case 3:
