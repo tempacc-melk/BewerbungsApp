@@ -104,8 +104,8 @@ namespace BewerbungsApp
             pos = 0;
             Console.Write("Eingabe / Input: ");
             string input = CheckInput();
-
-            if (input == "0" || input.Equals("deutsch", StringComparison.CurrentCultureIgnoreCase))
+            input = input.ToUpper();
+            if (input == "0" || input.Equals("DEUTSCH"))
             {
                 SetLanguage(0);
                 pos = 1;
@@ -115,7 +115,7 @@ namespace BewerbungsApp
                 PostMessage(1);
                 ShowAllFunctions();
             }
-            else if (input == "1" || input.Equals("english", StringComparison.CurrentCultureIgnoreCase))
+            else if (input == "1" || input.Equals("ENGLISH"))
             {
                 SetLanguage(1);
                 pos = 1;
@@ -125,7 +125,7 @@ namespace BewerbungsApp
                 PostMessage(1);
                 ShowAllFunctions();
             }
-            else if (input != "0" || input != "1" || !input.Equals("deutsch", StringComparison.CurrentCultureIgnoreCase) || !input.Equals("english", StringComparison.CurrentCultureIgnoreCase))
+            else if (input != "0" || input != "1" || !input.Equals("DEUTSCH") || !input.Equals("ENGLISH"))
             {
                 InitializeApp();
             }
@@ -296,7 +296,7 @@ namespace BewerbungsApp
             } 
             else
             {
-                return input.ToUpper().Contains('Y', StringComparison.CurrentCultureIgnoreCase) ? true : false;
+                return input.ToUpper().Contains('Y') ? true : false;
             }
         }
 
