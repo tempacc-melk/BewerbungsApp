@@ -497,12 +497,16 @@ namespace BewerbungsApp
                     Console.Clear();
                     Console.WriteLine("/************************ DB **************************/\n");
                     Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
-                    Console.WriteLine("ID  |Name--------------|Email-------|Handy-------|Stadt-Plz------|Strasse-----");
-                    Console.WriteLine("------------------------------------------------------------------------------");
+                    Console.WriteLine("ID  |Name              |Email       |Handy       |Stadt-Plz      |Strasse     ");
+                    Console.WriteLine("====|==================|============|============|===============|============");
                     for (int i = 0; i < DB.Count; i++)
                     {
                         string tempid = string.Format("{0:00}", i);
-                        Console.WriteLine($"{tempid}--|{DB.Dbitems[i].Name} |");
+                        string tempname = DB.Dbitems[i].Name;
+                        tempname = tempname.PadRight(18, ' ');
+
+                        Debug.WriteLine("Tempname:" + tempname);
+                        Console.WriteLine($"{tempid}  |{tempname}|");
                     }
                     break;
 

@@ -107,12 +107,6 @@ namespace BewerbungsApp.Database
                 }
                 dbitemDictionary.Add(_dictionary);
             }
-
-            for (int i = 0; i < dbitems.Count; i++)
-            {
-                Debug.WriteLine("Here");
-                Console.WriteLine(dbitems[i].Name);
-            }
         }
     }
 }
