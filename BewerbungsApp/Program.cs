@@ -177,8 +177,9 @@ namespace BewerbungsApp
             }
             else if (input == "1")
             {
+                DB.InitializeDB();
                 PostMessage(21);
-                DBItem.CreateTempXml();
+
                 if (gui)
                 {
                     Console.Write(Environment.NewLine);
@@ -190,6 +191,8 @@ namespace BewerbungsApp
                     }
                     else
                     {
+                        Console.WriteLine("No input detected or denied, going back to menu.");
+                        Thread.Sleep(2000);
                         Return(3);
                     }
                     
@@ -205,19 +208,26 @@ namespace BewerbungsApp
                         Process.Start("GUI/BewerbungsAppGUI.exe");
                         gui = true;
 
+                        Console.Write(Environment.NewLine);
                         Console.WriteLine("Do you want to enable auto-update to GUI? Y/N");
                         Console.Write("Input: ");
                         if (CheckForYesOrNo(Console.ReadLine()!))
                         {
-                            // placeholder
+                            Console.WriteLine("placeholder");
+                            Thread.Sleep(2000);
+                            Return(3);
                         }
                         else
                         {
+                            Console.WriteLine("No input detected or denied, going back to menu.");
+                            Thread.Sleep(2000);
                             Return(3);
                         }
                     }
                     else
                     {
+                        Console.WriteLine("No input detected or refused, going back to menu.");
+                        Thread.Sleep(2000);
                         Return(3);
                     }
                 }
@@ -320,20 +330,24 @@ namespace BewerbungsApp
 
             if (pos == 0)
             {
-                switch (checkInput?.ToUpper())
+                checkInput = checkInput?.ToUpper();
+                if (checkInput == "")
                 {
-                    case "":
-                        Console.WriteLine("Err: Keine Eingabe / No input\n");
-                        break;
-
-                    case "HELP" or "HILFE":
-                        Help();
-                        break;
-
-                    case "EXIT":
-                        Console.WriteLine("Anwendung wird beendet / Closing the application");
-                        Environment.Exit(0);
-                        break;
+                    Console.WriteLine("Err: Keine Eingabe / No input\n");
+                }
+                else if (checkInput == "HELP" || checkInput == "HILFE")
+                {
+                    Help();
+                }
+                else if (checkInput == "EXIT")
+                {
+                    Console.WriteLine("Anwendung wird beendet / Closing the application");
+                    Thread.Sleep(1500);
+                    Environment.Exit(0);
+                }
+                else
+                {
+                    Console.WriteLine("Err: Unbekannte Eingabe / Unknown input\n");
                 }
             }
             else
@@ -390,6 +404,7 @@ namespace BewerbungsApp
 
                     case "EXIT":
                         Console.WriteLine(langItems[3]);
+                        Thread.Sleep(1500);
                         Environment.Exit(0);
                         break;
                 }
@@ -482,6 +497,13 @@ namespace BewerbungsApp
                     Console.Clear();
                     Console.WriteLine("/************************ DB **************************/\n");
                     Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
+                    Console.WriteLine("ID  |Name--------------|Email-------|Handy-------|Stadt-Plz------|Strasse-----");
+                    Console.WriteLine("------------------------------------------------------------------------------");
+                    for (int i = 0; i < DB.Count; i++)
+                    {
+                        string tempid = string.Format("{0:00}", i);
+                        Console.WriteLine($"{tempid}--|{DB.Dbitems[i].Name} |");
+                    }
                     break;
 
                 case 3:
