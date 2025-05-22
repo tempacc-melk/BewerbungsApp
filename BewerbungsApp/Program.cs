@@ -9,82 +9,80 @@ namespace BewerbungsApp
 
         private static bool gui;
         private static int pos = 0;
-        private static List<string> langItems = [];
-        private static void SetLanguage(int input) {
-            langItems.Clear();
-            switch (input)
+        private static string[] langItems = new string[24];
+        private static void SetLanguage(int input) 
+        {
+            if (input == 0)
             {
-                case 0:
-                    // Grundlegende Sachen
-                    langItems.Add("Eingabe: ");                                                         // 0
-                    langItems.Add("Err: Keine Eingabe");                                                // 1
-                    langItems.Add("Err: Ungültige Eingabe");                                            // 2
-                    langItems.Add("Anwendung wird beendet");                                            // 3
-                    langItems.Add("Sie haben Deutsch als Sprache ausgewählt.");                         // 4
+                // Grundlegende Sachen
+                langItems[0] = "Eingabe: ";
+                langItems[1] = "Err: Keine Eingabe";
+                langItems[2] = "Err: Ungültige Eingabe";
+                langItems[3] = "Anwendung wird beendet";
+                langItems[4] = "Sie haben Deutsch als Sprache ausgewählt.";
 
-                    // Alle Funktionen
-                    langItems.Add("Folgende Optionen stehen zur Verfügung:");                           // 5
-                    langItems.Add("0 | Datenbank | SQL / XML");                                         // 6
-                    langItems.Add("1 | GUI | C# / Java");                                               // 7
-                    langItems.Add("2 | Kommunikation | PHP");                                           // 8
-                    langItems.Add("3 | ... | JavaScript");                                              // 9
+                // Alle Funktionen
+                langItems[5] = "Folgende Optionen stehen zur Verfügung:";
+                langItems[6] = "0 | Datenbank | SQL / XML";
+                langItems[7] = "1 | GUI | C# / Java";
+                langItems[8] = "2 | Kommunikation | PHP";
+                langItems[9] = "3 | ... | JavaScript";
 
-                    // Datenbank Optionen
-                    langItems.Add("Folgende Datenbank Optionen stehen zur Verfügung:");                 // 10
-                    langItems.Add("0 | Erstelle eine Datenbank");                                       // 11
-                    langItems.Add("1 | Lade 'Hard-Coded' Datenbank");                                   // 12
-                    langItems.Add("2 | Datenbank bearbeiten");                                          // 13
-                    langItems.Add("3 | Importiere eine Datenbank");                                     // 14
-                    langItems.Add("4 | Exportiere the Datenbank");                                      // 15
+                // Datenbank Optionen
+                langItems[10] = "Folgende Datenbank Optionen stehen zur Verfügung:";
+                langItems[11] = "0 | Erstelle eine Datenbank";
+                langItems[12] = "1 | Lade 'Hard-Coded' Datenbank";
+                langItems[13] = "2 | Datenbank bearbeiten";
+                langItems[14] = "3 | Importiere eine Datenbank";
+                langItems[15] = "4 | Exportiere the Datenbank";
 
-                    // GUI
-                    langItems.Add("Folgende GUI Optionen stehen zur Verfügung:");                       // 16
-                    langItems.Add("0 | Öffne GUI geschrieben in C#");                                   // 17
-                    langItems.Add("1 | Öffne GUI geschrieben in Java");                                 // 18
+                // GUI
+                langItems[16] = "Folgende GUI Optionen stehen zur Verfügung:";
+                langItems[17] = "0 | Öffne GUI geschrieben in C#";
+                langItems[18] = "1 | Öffne GUI geschrieben in Java";
 
-                    // Liste mit allen Befehlen
-                    langItems.Add(" * Liste aller Befehle:");                                           // 
-                    langItems.Add(" * Sprache -WERT | Um die Sprache zu ändern");                       // 
-                    langItems.Add(" * Menu          | Öffnet das Hauptfenster mit allen Funktionen");   // 
-                    langItems.Add(" * Zuruck        | Springt eine Seite zurück");                      //
-                    langItems.Add(" * Exit          | Beendet die Anwendung");                          // 
-                    break;
+                // Liste mit allen Befehlen
+                langItems[19] = " * Liste aller Befehle:";
+                langItems[20] = " * Sprache -WERT | Um die Sprache zu ändern";
+                langItems[21] = " * Menu          | Öffnet das Hauptfenster mit allen Funktionen";
+                langItems[22] = " * Zuruck        | Springt eine Seite zurück";
+                langItems[23] = " * Exit          | Beendet die Anwendung";
+            }
+            else
+            {
+                // Basic stuff
+                langItems[0] = "Input: ";
+                langItems[1] = "Err: No input";
+                langItems[2] = "Err: Invalid input";
+                langItems[3] = "Closing the application";
+                langItems[4] = "You've selected english as your language.";
 
-                case 1:
-                    // Basic stuff
-                    langItems.Add("Input: ");                                                   // 0
-                    langItems.Add("Err: No input");                                             // 1
-                    langItems.Add("Err: Invalid input");                                        // 2
-                    langItems.Add("Closing the application");                                   // 3
-                    langItems.Add("You've selected english as your language.");                 // 4
+                // All functions
+                langItems[5] = "Following options are available:";
+                langItems[6] = "0 | Database | SQL / XML";
+                langItems[7] = "1 | GUI | C# / Java";
+                langItems[8] = "2 | Communication | PHP";
+                langItems[9] = "3 | ... | JavaScript";
 
-                    // All functions
-                    langItems.Add("Following options are available:");                          // 5
-                    langItems.Add("0 | Database | SQL / XML");                                  // 6
-                    langItems.Add("1 | GUI | C# / Java");                                       // 7
-                    langItems.Add("2 | Communication | PHP");                                   // 8
-                    langItems.Add("3 | ... | JavaScript");                                      // 9
+                // Database options
+                langItems[10] = "Following database options are available:";
+                langItems[11] = "0 | Create a database";
+                langItems[12] = "1 | Load 'Hard coded' database";
+                langItems[13] = "2 | Edit database";
+                langItems[14] = "3 | Import a database";
+                langItems[15] = "4 | Export the database";
 
-                    // Database options
-                    langItems.Add("Following database options are available:");                 // 10
-                    langItems.Add("0 | Create a database");                                     // 11
-                    langItems.Add("1 | Load 'Hard coded' database");                            // 12
-                    langItems.Add("2 | Edit database");                                         // 13
-                    langItems.Add("3 | Import a database");                                     // 14
-                    langItems.Add("4 | Export the database");                                   // 15
+                // GUI
+                langItems[16] = "Following GUI options are available:";
+                langItems[17] = "0 | Open GUI written in C#";
+                langItems[18] = "1 | Open GUI written in Java";
 
-                    // GUI
-                    langItems.Add("Following GUI options are available:");                      // 16
-                    langItems.Add("0 | Open GUI written in C#");                                // 17
-                    langItems.Add("1 | Open GUI written in Java");                              // 18
-
-                    // List of all commands
-                    langItems.Add(" * List of all commands:");                                  // 
-                    langItems.Add(" * Lang -VALUE   | To change the language");                 // 
-                    langItems.Add(" * Menu          | Opens the menu with all functions");      // 
-                    langItems.Add(" * Return        | Goes back one page");                     //
-                    langItems.Add(" * Exit          | Closes the application");                 // 
-                    break;
+                // List of all commands
+                langItems[19] = " * List of all commands:";
+                langItems[20] = " * Lang -VALUE   | To change the language";
+                langItems[21] = " * Menu          | Opens the menu with all functions";
+                langItems[22] = " * Return        | Goes back one page";
+                langItems[23] = " * Exit          | Closes the application";
             }
         }
 
@@ -177,6 +175,35 @@ namespace BewerbungsApp
             {
                 DB.InitializeDB();
                 PostMessage(21);
+
+                for (int i = 0; i < DB.Count; i++)
+                {
+                    string tempid = string.Format("{0:00}", i);
+                    if (tempid.Length < 2) tempid = tempid.PadRight(2, ' ');
+                    else if (tempid.Length > 2) tempid = tempid[..(tempid.Length - 2)];
+
+                    string tempname = DB.users[i].Name;
+                    if (tempname.Length < 20) tempname = tempname.PadRight(20, ' ');
+                    else if (tempname.Length > 20) tempname = tempname[..(tempname.Length - 20)];
+
+                    string tempemail = DB.users[i].Email;
+                    if (tempemail.Length < 28) tempemail = tempemail.PadRight(28, ' ');
+                    else if (tempemail.Length > 28) tempemail = tempemail[..(tempemail.Length - 28)];
+
+                    string temphandy = DB.users[i].Handy.ToString();
+                    if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
+                    else if (temphandy.Length > 16) temphandy = temphandy[..(temphandy.Length - 16)];
+
+                    string tempstadtplz = DB.users[i].Townplz.ToString();
+                    if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
+                    else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz[..(tempstadtplz.Length - 10)];
+
+                    string tempstrasse = DB.users[i].Strasse;
+                    if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
+                    else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..(tempstrasse.Length - 20)];
+
+                    Console.WriteLine($"{tempid}  |{tempname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
+                }
 
                 if (gui)
                 {
@@ -444,7 +471,7 @@ namespace BewerbungsApp
                 helpMsg += " * \n";
                     for (int i = 0; i < 5; i++)
                 {
-                    helpMsg += langItems[langItems.Count - 5 + i] + "\n";
+                    helpMsg += langItems[langItems.Length - 5 + i] + "\n";
                 }
                 helpMsg += " * ";
             }
@@ -505,32 +532,6 @@ namespace BewerbungsApp
                     Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
                     Console.WriteLine("ID  |Name                |Email                       |Handy           |Stadt-Plz |Strasse             ");
                     Console.WriteLine("====|====================|============================|================|==========|====================");
-                    for (int i = 0; i < DB.Count; i++)
-                    {
-                        string tempid = string.Format("{0:00}", i);
-
-                        string tempname = DB.users[i].Name;
-                        if (tempname.Length < 20) tempname = tempname.PadRight(20, ' ');
-                        else if (tempname.Length > 20) tempname = tempname.Remove(20, tempname.Length - 20);
-
-                        string tempemail = DB.users[i].Email;
-                        if (tempemail.Length < 28) tempemail = tempemail.PadRight(28, ' ');
-                        else if (tempemail.Length > 28) tempemail = tempemail.Remove(28, tempemail.Length - 28);
-
-                        string temphandy = DB.users[i].Handy.ToString();
-                        if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
-                        else if (temphandy.Length > 16) temphandy = temphandy.Remove(16, temphandy.Length - 16);
-
-                        string tempstadtplz = DB.users[i].Townplz.ToString();
-                        if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
-                        else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz.Remove(10, tempstadtplz.Length - 10);
-
-                        string tempstrasse = DB.users[i].Strasse;
-                        if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
-                        else if (tempstrasse.Length > 20) tempstrasse = tempstrasse.Remove(20, tempstrasse.Length - 20);
-
-                        Console.WriteLine($"{tempid}  |{tempname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
-                    }
                     break;
 
                 case 3:
