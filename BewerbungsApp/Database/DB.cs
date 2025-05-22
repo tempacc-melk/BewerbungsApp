@@ -8,14 +8,25 @@ namespace BewerbungsApp.Database
     internal class DB
     {
         private static XmlDocument newtempXml = new();
+        internal static XmlDocument NewtempXml
+        {
+            get => newtempXml;
+        }
         private static List<DBItem> dbitems = new();
-        internal static List<DBItem> Dbitems
+        internal static List<DBItem> users
         {
             get => dbitems;
             set => dbitems = value;
         }
         private static List<Dictionary<string, string>> dbitemDictionary = new();
         private static Dictionary<string, string> _dictionary;
+
+        private static string xmlstring;
+        internal static string Xmlstring
+        {
+            get => xmlstring;
+            set => xmlstring = value;
+        }
 
         private static int count;
         internal static int Count
@@ -27,9 +38,9 @@ namespace BewerbungsApp.Database
         internal static void InitializeDB()
         {
             Console.Write(Environment.NewLine);
-            string xmlfile =
-                @"<?xml version='1.0' encoding='UTF-8' standalone='yes'?>" +
-                "<root xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance'>" +
+            Xmlstring =
+                @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>" +
+                @"<root xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">" +
                     "<user>" +
                         "<Name>Max Mustermann</Name>" +
                         "<Email>max.mustermann@muster.de</Email>" +
@@ -68,7 +79,7 @@ namespace BewerbungsApp.Database
                 "</root>";
 
             // NAME || EMAIL || PHONE || TOWN ZIP || STREET + NR
-            newtempXml.LoadXml(xmlfile);
+            newtempXml.LoadXml(Xmlstring);
             LoadDatabase();
             for (int i = 0; i < dbitemDictionary.Count; i++)
             {

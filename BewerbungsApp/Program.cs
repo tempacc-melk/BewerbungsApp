@@ -12,7 +12,6 @@ namespace BewerbungsApp
         private static List<string> langItems = [];
         private static void SetLanguage(int input) {
             langItems.Clear();
-            langItems = [];
             switch (input)
             {
                 case 0:
@@ -497,16 +496,33 @@ namespace BewerbungsApp
                     Console.Clear();
                     Console.WriteLine("/************************ DB **************************/\n");
                     Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
-                    Console.WriteLine("ID  |Name              |Email       |Handy       |Stadt-Plz      |Strasse     ");
-                    Console.WriteLine("====|==================|============|============|===============|============");
+                    Console.WriteLine("ID  |Name                |Email                       |Handy           |Stadt-Plz |Strasse             ");
+                    Console.WriteLine("====|====================|============================|================|==========|====================");
                     for (int i = 0; i < DB.Count; i++)
                     {
                         string tempid = string.Format("{0:00}", i);
-                        string tempname = DB.Dbitems[i].Name;
-                        tempname = tempname.PadRight(18, ' ');
 
-                        Debug.WriteLine("Tempname:" + tempname);
-                        Console.WriteLine($"{tempid}  |{tempname}|");
+                        string tempname = DB.users[i].Name;
+                        if (tempname.Length < 20) tempname = tempname.PadRight(20, ' ');
+                        else if (tempname.Length > 20) tempname = tempname.Remove(20, tempname.Length - 20);
+
+                        string tempemail = DB.users[i].Email;
+                        if (tempemail.Length < 28) tempemail = tempemail.PadRight(28, ' ');
+                        else if (tempemail.Length > 28) tempemail = tempemail.Remove(28, tempemail.Length - 28);
+
+                        string temphandy = DB.users[i].Handy.ToString();
+                        if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
+                        else if (temphandy.Length > 16) temphandy = temphandy.Remove(16, temphandy.Length - 16);
+
+                        string tempstadtplz = DB.users[i].Townplz.ToString();
+                        if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
+                        else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz.Remove(10, tempstadtplz.Length - 10);
+
+                        string tempstrasse = DB.users[i].Strasse;
+                        if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
+                        else if (tempstrasse.Length > 20) tempstrasse = tempstrasse.Remove(20, tempstrasse.Length - 20);
+
+                        Console.WriteLine($"{tempid}  |{tempname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
                     }
                     break;
 
