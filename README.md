@@ -10,9 +10,10 @@ Tools die verwendet wurden:
 ## Konsolen App v0.1
 Dient zum starten aller anderen Anwendungen und als Zwischenschnittstelle.
 
-## Datenbank | SQL / XML  
+## Datenbank | SQL v0.0 / XML v0.1 
 Mit dieser Funktion kann man eine Datenbank mittels der Konsolle erstellen, lesen, importieren und exportieren (SQL / XML) <br />
-- wip
+SQL -> wip <br />
+XML -> Hard coded Datenbank lässt sich auslesen und exportieren, rest wip. <br />
 
 ## GUI | C# v0.1 / Java v0.0
 Dient zur Darstellung der Datenbank (C# / Java) <br />
