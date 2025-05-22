@@ -1,17 +1,12 @@
 ﻿
-using System.Diagnostics;
-using System.Text.Unicode;
 using System.Xml;
+using System.Xml.Linq;
 
 namespace BewerbungsApp.Database
 {
     internal class DB
     {
         private static XmlDocument newtempXml = new();
-        internal static XmlDocument NewtempXml
-        {
-            get => newtempXml;
-        }
         private static List<DBItem> dbitems = new();
         internal static List<DBItem> users
         {
@@ -19,9 +14,9 @@ namespace BewerbungsApp.Database
             set => dbitems = value;
         }
         private static List<Dictionary<string, string>> dbitemDictionary = new();
-        private static Dictionary<string, string> _dictionary;
+        private static Dictionary<string, string> _dictionary = new();
 
-        private static string xmlstring;
+        private static string xmlstring = "";
         internal static string Xmlstring
         {
             get => xmlstring;
@@ -38,9 +33,8 @@ namespace BewerbungsApp.Database
         internal static void InitializeDB()
         {
             Console.Write(Environment.NewLine);
-            Xmlstring =
-                @"<?xml version=""1.0"" encoding=""UTF-8"" standalone=""yes""?>" +
-                @"<root xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">" +
+            Xmlstring = XElement.Parse(
+                @"<root xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">" + "" +
                     "<user>" +
                         "<Name>Max Mustermann</Name>" +
                         "<Email>max.mustermann@muster.de</Email>" +
@@ -76,9 +70,9 @@ namespace BewerbungsApp.Database
                         "<TownPLZ>25143</TownPLZ>" +
                         "<Strasse>Musterstrasse 8</Strasse>" +
                     "</user>" +
-                "</root>";
+                "</root>"
+                ).ToString();
 
-            // NAME || EMAIL || PHONE || TOWN ZIP || STREET + NR
             newtempXml.LoadXml(Xmlstring);
             LoadDatabase();
             for (int i = 0; i < dbitemDictionary.Count; i++)

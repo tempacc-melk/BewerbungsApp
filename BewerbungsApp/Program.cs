@@ -89,7 +89,6 @@ namespace BewerbungsApp
         }
 
         private static readonly string databaseName = "Local DB v0.1";
-        private static Dictionary<List<string>, string> databaseItems;
 
         static void Main()
         {
@@ -246,7 +245,22 @@ namespace BewerbungsApp
             else if (input == "4")
             {
                 // Export as SQL or XML format
-                Console.WriteLine();
+                // Einfrage einbauen ob als SQL oder XML exportiert werden soll
+                if (DB.Xmlstring.Length > 0)
+                {
+                    string fileName = $"Custom DB - {DateTime.Now:HH.mm.ss}.xml";
+                    Console.WriteLine($"Creating {fileName}...");
+                    File.WriteAllText($"./Database/Export/{fileName}", DB.Xmlstring);
+                    Console.WriteLine($"File created. Going back to menu");
+                    Thread.Sleep(2000);
+                } 
+                else
+                {
+                    Console.WriteLine("The Hardcoded DB hasn't been loaded, going back");
+                    Thread.Sleep(2000);
+                    Return(pos--);
+                }
+                Return(3);
             }
             else
             {
@@ -299,14 +313,7 @@ namespace BewerbungsApp
         }
         private static bool CheckForYesOrNo (string input)
         {
-            if (input == string.Empty)
-            {
-                return false;
-            } 
-            else
-            {
-                return input.ToUpper().Contains('Y') ? true : false;
-            }
+            return input.ToUpper().Contains('Y') ? true : false;
         }
 
         private static void Communication ()
@@ -554,13 +561,10 @@ namespace BewerbungsApp
 
         private static void Return (int value)
         {
-            switch (value)
+            if (value >= 3 && value <= 6)
             {
-                case >= 3 and <= 6:
-                    PostMessage(1);
-                    ShowAllFunctions();
-                    break;
-
+                PostMessage(1);
+                ShowAllFunctions();
             }
         }       
     }
