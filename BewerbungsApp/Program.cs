@@ -178,31 +178,30 @@ namespace BewerbungsApp
 
                 for (int i = 0; i < DB.Count; i++)
                 {
-                    string tempid = string.Format("{0:00}", i);
-                    if (tempid.Length < 2) tempid = tempid.PadRight(2, ' ');
-                    else if (tempid.Length > 2) tempid = tempid[..(tempid.Length - 2)];
+                    string tempid = DB.users[i].Id.ToString();
+                    if (tempid.Length < 4) tempid = tempid.PadRight(4, ' ');
 
                     string tempname = DB.users[i].Name;
                     if (tempname.Length < 20) tempname = tempname.PadRight(20, ' ');
-                    else if (tempname.Length > 20) tempname = tempname[..(tempname.Length - 20)];
+                    else if (tempname.Length > 20) tempname = tempname[..20];
 
                     string tempemail = DB.users[i].Email;
                     if (tempemail.Length < 28) tempemail = tempemail.PadRight(28, ' ');
-                    else if (tempemail.Length > 28) tempemail = tempemail[..(tempemail.Length - 28)];
+                    else if (tempemail.Length > 28) tempemail = tempemail[..28];
 
                     string temphandy = DB.users[i].Handy.ToString();
                     if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
-                    else if (temphandy.Length > 16) temphandy = temphandy[..(temphandy.Length - 16)];
+                    else if (temphandy.Length > 16) temphandy = temphandy[..16];
 
                     string tempstadtplz = DB.users[i].Townplz.ToString();
                     if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
-                    else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz[..(tempstadtplz.Length - 10)];
+                    else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz[..10];
 
                     string tempstrasse = DB.users[i].Strasse;
                     if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
-                    else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..(tempstrasse.Length - 20)];
+                    else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..20];
 
-                    Console.WriteLine($"{tempid}  |{tempname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
+                    Console.WriteLine($"{tempid}|{tempname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
                 }
 
                 if (gui)
@@ -360,19 +359,19 @@ namespace BewerbungsApp
         private static string CheckInput ()
         {
             string? checkInput = Console.ReadLine();
+            string inputUC = checkInput.ToUpper();
 
             if (pos == 0)
             {
-                checkInput = checkInput?.ToUpper();
-                if (checkInput == "")
+                if (inputUC == "")
                 {
                     Console.WriteLine("Err: Keine Eingabe / No input\n");
                 }
-                else if (checkInput == "HELP" || checkInput == "HILFE")
+                else if (inputUC == "HELP" || inputUC == "HILFE")
                 {
                     Help();
                 }
-                else if (checkInput == "EXIT")
+                else if (inputUC == "EXIT")
                 {
                     Console.WriteLine("Anwendung wird beendet / Closing the application");
                     Thread.Sleep(1500);
@@ -385,39 +384,38 @@ namespace BewerbungsApp
             }
             else
             {
-                switch (checkInput?.ToUpper())
+                switch (inputUC)
                 {
                     case "":
                         Console.WriteLine(langItems[1] + "\n");
                         break;
-
-                    case string when 
-                    (checkInput.ToUpper().Contains("SPRACHE ") || checkInput.ToUpper().Contains("LANG ")) && 
-                    (checkInput.Contains("-0") || checkInput.ToUpper().Contains("-DE") || checkInput.Contains("-1") || checkInput.ToUpper().Contains("-EN")):
-                        string[] getLang = checkInput.Split('-');
-                        if (getLang.Length > 2)
-                        {
-                            Console.WriteLine(langItems[2] + "\n");
-                            break;
-                        }
-
-                        if (getLang[1].Length <= 1)
-                        {
-                            SetLanguage(int.Parse(getLang[1]));
-                            Console.WriteLine(langItems[4] + "\n");
-                        } 
-                        else
+                              
+                    case string when inputUC.Contains("SPRACHE -") || inputUC.Contains("LANG -"):
+                        string[] getLang = inputUC.Split('-');
+                        bool checkForNumber = int.TryParse(getLang[1], out _);
+                        if (getLang[1].Length > 0)
                         {
                             getLang[1] = getLang[1][..1];
-                            if (getLang[1] == "d")
+                            if (checkForNumber)
                             {
-                                SetLanguage(0);
+                                SetLanguage(int.Parse(getLang[1]));
                             }
-                            if (getLang[1] == "e")
+                            else
                             {
-                                SetLanguage(1);
+                                if (getLang[1] == "D")
+                                {
+                                    SetLanguage(0);
+                                }
+                                else
+                                {
+                                    SetLanguage(1);
+                                }
                             }
                             Console.WriteLine(langItems[4] + "\n");
+                        }
+                        else
+                        {
+                            Console.WriteLine(langItems[2] + "\n");
                         }
                         break;
 

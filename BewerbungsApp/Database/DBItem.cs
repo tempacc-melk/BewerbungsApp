@@ -3,6 +3,12 @@ namespace BewerbungsApp.Database
 {
     internal class DBItem
     {
+        private byte id;
+        internal byte Id
+        {
+            get => id; 
+            set => id = value;
+        }
 
         private string name;
         internal string Name
@@ -37,6 +43,7 @@ namespace BewerbungsApp.Database
 
         internal DBItem(Dictionary<string, string> dir)
         {
+            id = byte.Parse(dir["ID"]);
             name = dir["Name"];
             email = dir["Email"];
             handy = ulong.Parse(dir["Handy"]);
@@ -44,8 +51,9 @@ namespace BewerbungsApp.Database
             strasse = dir["Strasse"];
         }
         internal DBItem() { }
-        internal DBItem(string newname, string newemail, ulong newhandy, ushort newtownplz, string newstrasse)
+        internal DBItem(byte newid, string newname, string newemail, ulong newhandy, ushort newtownplz, string newstrasse)
         {
+            Id = newid;
             Name = newname;
             Email = newemail;
             Handy = newhandy;
@@ -55,6 +63,7 @@ namespace BewerbungsApp.Database
         
         internal string Clear ()
         {
+            Id = 0;
             Name = string.Empty;
             Email = string.Empty;
             Handy = 0;

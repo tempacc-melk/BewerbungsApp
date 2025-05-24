@@ -35,6 +35,7 @@ namespace BewerbungsApp.Database
             Xmlstring = XElement.Parse(
                 @"<root xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">" + "" +
                     "<user>" +
+                        "<ID>0</ID>" +
                         "<Name>Max Mustermann</Name>" +
                         "<Email>max.mustermann@muster.de</Email>" +
                         "<Handy>0123456789</Handy>" +
@@ -42,6 +43,7 @@ namespace BewerbungsApp.Database
                         "<Strasse>Musterstrasse 12</Strasse>" +
                     "</user>" +
                     "<user>" +
+                        "<ID>1</ID>" +
                         "<Name>Markus Mustermann</Name>" +
                         "<Email>markus.mustermann@muster.de</Email>" +
                         "<Handy>9876543210</Handy>" +
@@ -49,6 +51,7 @@ namespace BewerbungsApp.Database
                         "<Strasse>Musterstrasse 21</Strasse>" +
                     "</user>" +
                     "<user>" +
+                        "<ID>2</ID>" +
                         "<Name>Anna Mustermann</Name>" +
                         "<Email>anna.mustermann@muster.de</Email>" +
                         "<Handy>7896542130</Handy>" +
@@ -56,6 +59,7 @@ namespace BewerbungsApp.Database
                         "<Strasse>Musterstrasse 22</Strasse>" +
                     "</user>" +
                     "<user>" +
+                        "<ID>3</ID>" +
                         "<Name>Tom Mustermann</Name>" +
                         "<Email>tom.mustermann@muster.de</Email>" +
                         "<Handy>5846279130</Handy>" +
@@ -63,6 +67,7 @@ namespace BewerbungsApp.Database
                         "<Strasse>Musterstrasse 31</Strasse>" +
                     "</user>" +
                     "<user>" +
+                        "<ID>4</ID>" +
                         "<Name>Lena Mustermann</Name>" +
                         "<Email>lena.mustermann@muster.de</Email>" +
                         "<Handy>3698521470</Handy>" +
@@ -92,6 +97,9 @@ namespace BewerbungsApp.Database
                 {
                     switch (content.Name)
                     {
+                        case "ID":
+                            _dictionary.Add("ID", content.InnerText);
+                            break;
                         case "Name":
                             _dictionary.Add("Name", content.InnerText);
                             break;
