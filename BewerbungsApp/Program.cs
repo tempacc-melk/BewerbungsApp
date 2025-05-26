@@ -9,7 +9,7 @@ namespace BewerbungsApp
 
         private static bool gui;
         private static int pos = 0;
-        private static string[] langItems = new string[24];
+        private static readonly string[] langItems = new string[24];
         private static void SetLanguage(int input) 
         {
             if (input == 0)
@@ -181,13 +181,17 @@ namespace BewerbungsApp
                     string tempid = DB.users[i].Id.ToString();
                     if (tempid.Length < 4) tempid = tempid.PadRight(4, ' ');
 
-                    string tempname = DB.users[i].Name;
-                    if (tempname.Length < 20) tempname = tempname.PadRight(20, ' ');
-                    else if (tempname.Length > 20) tempname = tempname[..20];
+                    string tempvorname = DB.users[i].Vorname;
+                    if (tempvorname.Length < 14) tempvorname = tempvorname.PadRight(14, ' ');
+                    else if (tempvorname.Length > 14) tempvorname = tempvorname[..14];
+
+                    string tempnachname = DB.users[i].Nachname;
+                    if (tempnachname.Length < 16) tempnachname = tempnachname.PadRight(16, ' ');
+                    else if (tempnachname.Length > 16) tempnachname = tempnachname[..16];
 
                     string tempemail = DB.users[i].Email;
-                    if (tempemail.Length < 28) tempemail = tempemail.PadRight(28, ' ');
-                    else if (tempemail.Length > 28) tempemail = tempemail[..28];
+                    if (tempemail.Length < 26) tempemail = tempemail.PadRight(26, ' ');
+                    else if (tempemail.Length > 26) tempemail = tempemail[..26];
 
                     string temphandy = DB.users[i].Handy.ToString();
                     if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
@@ -201,7 +205,7 @@ namespace BewerbungsApp
                     if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
                     else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..20];
 
-                    Console.WriteLine($"{tempid}|{tempname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
+                    Console.WriteLine($"{tempid}|{tempvorname}|{tempnachname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
                 }
 
                 if (gui)
@@ -389,7 +393,7 @@ namespace BewerbungsApp
                     case "":
                         Console.WriteLine(langItems[1] + "\n");
                         break;
-                              
+                    
                     case string when inputUC.Contains("SPRACHE -") || inputUC.Contains("LANG -"):
                         string[] getLang = inputUC.Split('-');
                         bool checkForNumber = int.TryParse(getLang[1], out _);
@@ -528,8 +532,8 @@ namespace BewerbungsApp
                     Console.Clear();
                     Console.WriteLine("/************************ DB **************************/\n");
                     Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
-                    Console.WriteLine("ID  |Name                |Email                       |Handy           |Stadt-Plz |Strasse             ");
-                    Console.WriteLine("====|====================|============================|================|==========|====================");
+                    Console.WriteLine("ID  |Vorname       |Nachname        |Email                     |Handy           |Stadt-Plz |Strasse             ");
+                    Console.WriteLine("====|==============|================|==========================|================|==========|====================");
                     break;
 
                 case 3:

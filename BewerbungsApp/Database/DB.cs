@@ -33,10 +33,11 @@ namespace BewerbungsApp.Database
         {
             Console.Write(Environment.NewLine);
             Xmlstring = XElement.Parse(
-                @"<root xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">" + "" +
+                @"<root xmlns:xsi=""http://www.w3.org/2001/XMLSchema-instance"">" +
                     "<user>" +
                         "<ID>0</ID>" +
-                        "<Name>Max Mustermann</Name>" +
+                        "<Vorname>Max</Vorname>" +
+                        "<Nachname>Mustermann</Nachname>" +
                         "<Email>max.mustermann@muster.de</Email>" +
                         "<Handy>0123456789</Handy>" +
                         "<TownPLZ>12345</TownPLZ>" +
@@ -44,7 +45,8 @@ namespace BewerbungsApp.Database
                     "</user>" +
                     "<user>" +
                         "<ID>1</ID>" +
-                        "<Name>Markus Mustermann</Name>" +
+                        "<Vorname>Markus</Vorname>" +
+                        "<Nachname>Mustermann</Nachname>" +
                         "<Email>markus.mustermann@muster.de</Email>" +
                         "<Handy>9876543210</Handy>" +
                         "<TownPLZ>45123</TownPLZ>" +
@@ -52,7 +54,8 @@ namespace BewerbungsApp.Database
                     "</user>" +
                     "<user>" +
                         "<ID>2</ID>" +
-                        "<Name>Anna Mustermann</Name>" +
+                        "<Vorname>Anna</Vorname>" +
+                        "<Nachname>Mustermann</Nachname>" +
                         "<Email>anna.mustermann@muster.de</Email>" +
                         "<Handy>7896542130</Handy>" +
                         "<TownPLZ>13024</TownPLZ>" +
@@ -60,7 +63,8 @@ namespace BewerbungsApp.Database
                     "</user>" +
                     "<user>" +
                         "<ID>3</ID>" +
-                        "<Name>Tom Mustermann</Name>" +
+                        "<Vorname>Tom</Vorname>" +
+                        "<Nachname>Mustermann</Nachname>" +
                         "<Email>tom.mustermann@muster.de</Email>" +
                         "<Handy>5846279130</Handy>" +
                         "<TownPLZ>52431</TownPLZ>" +
@@ -68,7 +72,8 @@ namespace BewerbungsApp.Database
                     "</user>" +
                     "<user>" +
                         "<ID>4</ID>" +
-                        "<Name>Lena Mustermann</Name>" +
+                        "<Vorname>Lena</Vorname>" +
+                        "<Nachname>Mustermann</Nachname>" +
                         "<Email>lena.mustermann@muster.de</Email>" +
                         "<Handy>3698521470</Handy>" +
                         "<TownPLZ>25143</TownPLZ>" +
@@ -100,8 +105,11 @@ namespace BewerbungsApp.Database
                         case "ID":
                             _dictionary.Add("ID", content.InnerText);
                             break;
-                        case "Name":
-                            _dictionary.Add("Name", content.InnerText);
+                        case "Vorname":
+                            _dictionary.Add("Vorname", content.InnerText);
+                            break;
+                        case "Nachname":
+                            _dictionary.Add("Nachname", content.InnerText);
                             break;
                         case "Email":
                             _dictionary.Add("Email", content.InnerText);

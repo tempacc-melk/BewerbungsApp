@@ -10,11 +10,17 @@ namespace BewerbungsApp.Database
             set => id = value;
         }
 
-        private string name;
-        internal string Name
+        private string vorname;
+        internal string Vorname
         {
-            get => name;
-            set => name = value;
+            get => vorname;
+            set => vorname = value;
+        }
+        private string nachname;
+        internal string Nachname
+        {
+            get => nachname;
+            set => nachname = value;
         }
         private string email;
         internal string Email
@@ -44,17 +50,19 @@ namespace BewerbungsApp.Database
         internal DBItem(Dictionary<string, string> dir)
         {
             id = byte.Parse(dir["ID"]);
-            name = dir["Name"];
+            vorname = dir["Vorname"];
+            nachname = dir["Nachname"];
             email = dir["Email"];
             handy = ulong.Parse(dir["Handy"]);
             townplz = ushort.Parse(dir["TownPLZ"]);
             strasse = dir["Strasse"];
         }
         internal DBItem() { }
-        internal DBItem(byte newid, string newname, string newemail, ulong newhandy, ushort newtownplz, string newstrasse)
+        internal DBItem(byte newid, string newvorname, string newnachname, string newemail, ulong newhandy, ushort newtownplz, string newstrasse)
         {
             Id = newid;
-            Name = newname;
+            Vorname = newvorname;
+            Nachname = newnachname;
             Email = newemail;
             Handy = newhandy;
             Townplz = newtownplz;
@@ -64,7 +72,8 @@ namespace BewerbungsApp.Database
         internal string Clear ()
         {
             Id = 0;
-            Name = string.Empty;
+            Vorname = string.Empty;
+            Nachname = string.Empty;
             Email = string.Empty;
             Handy = 0;
             Townplz = 0;
