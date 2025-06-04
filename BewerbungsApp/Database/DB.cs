@@ -5,15 +5,15 @@ namespace BewerbungsApp.Database
 {
     internal class DB
     {
-        private static XmlDocument newtempXml = new();
-        private static List<DBItem> dbitems = new();
-        internal static List<DBItem> users
+        private static XmlDocument newtempXml = [];
+        private static List<DBItem> items = [];
+        internal static List<DBItem> Items
         {
-            get => dbitems;
-            set => dbitems = value;
+            get => items;
+            set => items = value;
         }
-        private static List<Dictionary<string, string>> dbitemDictionary = new();
-        private static Dictionary<string, string> _dictionary = new();
+        private static List<Dictionary<string, string>> dbitemDictionary = [];
+        private static Dictionary<string, string> _dictionary = [];
 
         private static string xmlstring = "";
         internal static string Xmlstring
@@ -86,7 +86,7 @@ namespace BewerbungsApp.Database
             LoadDatabase();
             for (int i = 0; i < dbitemDictionary.Count; i++)
             {
-                dbitems.Add(new DBItem(dbitemDictionary[i]));
+                Items.Add(new DBItem(dbitemDictionary[i]));
                 Count++;
             }
         }
@@ -97,7 +97,7 @@ namespace BewerbungsApp.Database
             foreach (XmlNode itemInfo in itemList)
             {
                 XmlNodeList itemContent = itemInfo.ChildNodes;
-                _dictionary = new();
+                _dictionary = [];
                 foreach (XmlNode content in itemContent)
                 {
                     switch (content.Name)

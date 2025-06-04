@@ -178,30 +178,30 @@ namespace BewerbungsApp
 
                 for (int i = 0; i < DB.Count; i++)
                 {
-                    string tempid = DB.users[i].Id.ToString();
+                    string tempid = DB.Items[i].Id.ToString();
                     if (tempid.Length < 4) tempid = tempid.PadRight(4, ' ');
 
-                    string tempvorname = DB.users[i].Vorname;
+                    string tempvorname = DB.Items[i].Vorname;
                     if (tempvorname.Length < 14) tempvorname = tempvorname.PadRight(14, ' ');
                     else if (tempvorname.Length > 14) tempvorname = tempvorname[..14];
 
-                    string tempnachname = DB.users[i].Nachname;
+                    string tempnachname = DB.Items[i].Nachname;
                     if (tempnachname.Length < 16) tempnachname = tempnachname.PadRight(16, ' ');
                     else if (tempnachname.Length > 16) tempnachname = tempnachname[..16];
 
-                    string tempemail = DB.users[i].Email;
+                    string tempemail = DB.Items[i].Email;
                     if (tempemail.Length < 26) tempemail = tempemail.PadRight(26, ' ');
                     else if (tempemail.Length > 26) tempemail = tempemail[..26];
 
-                    string temphandy = DB.users[i].Handy.ToString();
+                    string temphandy = DB.Items[i].Handy.ToString();
                     if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
                     else if (temphandy.Length > 16) temphandy = temphandy[..16];
 
-                    string tempstadtplz = DB.users[i].Townplz.ToString();
+                    string tempstadtplz = DB.Items[i].Townplz.ToString();
                     if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
                     else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz[..10];
 
-                    string tempstrasse = DB.users[i].Strasse;
+                    string tempstrasse = DB.Items[i].Strasse;
                     if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
                     else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..20];
 
@@ -276,6 +276,10 @@ namespace BewerbungsApp
             {
                 // Export as SQL or XML format
                 // Einfrage einbauen ob als SQL oder XML exportiert werden soll
+                // SQL Format
+                //
+                
+                // XML Format
                 if (DB.Xmlstring.Length > 0)
                 {
                     string fileName = $"Custom DB - {DateTime.Now:HH.mm.ss}.xml";
