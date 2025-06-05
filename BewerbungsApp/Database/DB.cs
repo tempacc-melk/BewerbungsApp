@@ -5,14 +5,14 @@ namespace BewerbungsApp.Database
 {
     internal class DB
     {
-        private static XmlDocument newtempXml = [];
+        private static readonly XmlDocument newtempXml = [];
         private static List<DBItem> items = [];
         internal static List<DBItem> Items
         {
             get => items;
             set => items = value;
         }
-        private static List<Dictionary<string, string>> dbitemDictionary = [];
+        private static readonly List<Dictionary<string, string>> dbitemDictionary = [];
         private static Dictionary<string, string> _dictionary = [];
 
         private static string xmlstring = "";
@@ -127,6 +127,12 @@ namespace BewerbungsApp.Database
                 }
                 dbitemDictionary.Add(_dictionary);
             }
+        }
+
+        internal static void AddItemToDatabase(DBItem item)
+        {
+            Items.Add(item);
+            count++;
         }
     }
 }

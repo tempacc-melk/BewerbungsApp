@@ -1,15 +1,29 @@
-﻿using System.Diagnostics;
-using BewerbungsApp.Database;
+﻿using BewerbungsApp.Database;
+using System.Diagnostics;
+using System.Net;
+using System.Net.Sockets;
 
 namespace BewerbungsApp
 {
 
     internal class Program
     {
-
+        #region Variables
         private static bool gui;
+        internal static bool Gui
+        {
+            get => gui;
+            set => gui = value;
+        }
+
         private static int pos = 0;
-        private static readonly string[] langItems = new string[24];
+        internal static int Pos
+        {
+            get => pos;
+            set => pos = value;
+        }
+
+        private static readonly string[] langItems = new string[28];
         private static void SetLanguage(int input) 
         {
             if (input == 0)
@@ -41,12 +55,19 @@ namespace BewerbungsApp
                 langItems[17] = "0 | Öffne GUI geschrieben in C#";
                 langItems[18] = "1 | Öffne GUI geschrieben in Java";
 
+                // Datenbank Option 0 - Weitere Funktionen
+                langItems[19] = "Folgende Datenbank Bearbeitungs Optionen stehen zur Verfügung";
+                langItems[20] = "0 | Hinzufügen";
+                langItems[21] = "1 | Bearbeiten";
+                langItems[22] = "2 | Löschen";
+
                 // Liste mit allen Befehlen
-                langItems[19] = " * Liste aller Befehle:";
-                langItems[20] = " * Sprache -WERT | Um die Sprache zu ändern";
-                langItems[21] = " * Menu          | Öffnet das Hauptfenster mit allen Funktionen";
-                langItems[22] = " * Zuruck        | Springt eine Seite zurück";
-                langItems[23] = " * Exit          | Beendet die Anwendung";
+                langItems[^5] = " * Liste aller Befehle:";
+                langItems[^4] = " * Sprache -WERT | Um die Sprache zu ändern";
+                langItems[^3] = " * Menu          | Öffnet das Hauptfenster mit allen Funktionen";
+                langItems[^2] = " * Zuruck        | Springt eine Seite zurück";
+                langItems[^1] = " * Exit          | Beendet die Anwendung";
+
             }
             else
             {
@@ -77,17 +98,38 @@ namespace BewerbungsApp
                 langItems[17] = "0 | Open GUI written in C#";
                 langItems[18] = "1 | Open GUI written in Java";
 
+                // Datenbank Option 0 - Further functions
+                langItems[19] = "Following database edit options are available";
+                langItems[20] = "0 | Add";
+                langItems[21] = "1 | Edit";
+                langItems[22] = "2 | Delete";
+
                 // List of all commands
-                langItems[19] = " * List of all commands:";
-                langItems[20] = " * Lang -VALUE   | To change the language";
-                langItems[21] = " * Menu          | Opens the menu with all functions";
-                langItems[22] = " * Return        | Goes back one page";
-                langItems[23] = " * Exit          | Closes the application";
+                langItems[^5] = " * List of all commands:";
+                langItems[^4] = " * Lang -VALUE   | To change the language";
+                langItems[^3] = " * Menu          | Opens the menu with all functions";
+                langItems[^2] = " * Return        | Goes back one page";
+                langItems[^1] = " * Exit          | Closes the application";
             }
         }
 
         private static readonly string databaseName = "Local DB v0.1";
 
+        private static TcpListener? tcpListenerv4;
+        private static TcpListener TcpListenerv4
+        {
+            get => tcpListenerv4;
+            set => tcpListenerv4 = value;
+        }
+
+        private static TcpListener? tcpListenerv6;
+        private static TcpListener TcpListenerv6
+        {
+            get => tcpListenerv6;
+            set => tcpListenerv6 = value;
+        }
+        #endregion
+        #region Main Methods
         static void Main()
         {
             PostMessage(-1);
@@ -157,7 +199,8 @@ namespace BewerbungsApp
                 ShowAllFunctions();
             }
         }
-
+        #endregion
+        #region Basic Methods
         private static void Database ()
         {
             pos = 3;
@@ -176,39 +219,7 @@ namespace BewerbungsApp
                 DB.InitializeDB();
                 PostMessage(21);
 
-                for (int i = 0; i < DB.Count; i++)
-                {
-                    string tempid = DB.Items[i].Id.ToString();
-                    if (tempid.Length < 4) tempid = tempid.PadRight(4, ' ');
-
-                    string tempvorname = DB.Items[i].Vorname;
-                    if (tempvorname.Length < 14) tempvorname = tempvorname.PadRight(14, ' ');
-                    else if (tempvorname.Length > 14) tempvorname = tempvorname[..14];
-
-                    string tempnachname = DB.Items[i].Nachname;
-                    if (tempnachname.Length < 16) tempnachname = tempnachname.PadRight(16, ' ');
-                    else if (tempnachname.Length > 16) tempnachname = tempnachname[..16];
-
-                    string tempemail = DB.Items[i].Email;
-                    if (tempemail.Length < 26) tempemail = tempemail.PadRight(26, ' ');
-                    else if (tempemail.Length > 26) tempemail = tempemail[..26];
-
-                    string temphandy = DB.Items[i].Handy.ToString();
-                    if (temphandy.Length < 16) temphandy = temphandy.PadRight(16, ' ');
-                    else if (temphandy.Length > 16) temphandy = temphandy[..16];
-
-                    string tempstadtplz = DB.Items[i].Townplz.ToString();
-                    if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
-                    else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz[..10];
-
-                    string tempstrasse = DB.Items[i].Strasse;
-                    if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
-                    else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..20];
-
-                    Console.WriteLine($"{tempid}|{tempvorname}|{tempnachname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
-                }
-
-                if (gui)
+                if (Gui)
                 {
                     Console.Write(Environment.NewLine);
                     Console.WriteLine("GUI detected. Do you want to enable auto-update to GUI? Y/N");
@@ -219,7 +230,7 @@ namespace BewerbungsApp
                     }
                     else
                     {
-                        Console.WriteLine("No input detected or denied, going back to menu.");
+                        Console.WriteLine("Going back to menu.");
                         Thread.Sleep(2000);
                         Return(3);
                     }
@@ -234,7 +245,7 @@ namespace BewerbungsApp
                     {
                         Console.WriteLine("Starting GUI C# v0.1");
                         Process.Start("GUI/BewerbungsAppGUI.exe");
-                        gui = true;
+                        Gui = true;
 
                         Console.Write(Environment.NewLine);
                         Console.WriteLine("Do you want to enable auto-update to GUI? Y/N");
@@ -247,14 +258,14 @@ namespace BewerbungsApp
                         }
                         else
                         {
-                            Console.WriteLine("No input detected or denied, going back to menu.");
+                            Console.WriteLine("Going back to menu.");
                             Thread.Sleep(2000);
                             Return(3);
                         }
                     }
                     else
                     {
-                        Console.WriteLine("No input detected or refused, going back to menu.");
+                        Console.WriteLine("Going back to menu.");
                         Thread.Sleep(2000);
                         Return(3);
                     }
@@ -265,7 +276,8 @@ namespace BewerbungsApp
             else if (input == "2")
             {
                 // Edit (UPDATE | INSERT | DELETE | DROP)
-
+                PostMessage(22);
+                DatabaseEdit();
             }
             else if (input == "3")
             {
@@ -301,6 +313,26 @@ namespace BewerbungsApp
                 Database();
             }
         }
+        private static void DatabaseEdit ()
+        {
+            pos = 30;
+            Console.Write(langItems[0]);
+            string input = CheckInput();
+            if (input == string.Empty)
+            {
+                DatabaseEdit();
+            }
+            else
+            {
+
+                /*
+                DBItem newitem = new("Test1", string.Empty, "No Email", 123, 55555, "Test 123");
+                DB.AddItemToDatabase(newitem);
+                PostMessage(21);
+                */
+                DatabaseEdit();
+            }
+        }
         private static void GUI ()
         {
             pos = 4;
@@ -314,7 +346,7 @@ namespace BewerbungsApp
                 {
                     PostMessage(31);
                     Process.Start("GUI/BewerbungsAppGUI.exe");
-                    gui = true;
+                    Gui = true;
                     Thread.Sleep(1000);
                     Return(3);
                 }
@@ -325,7 +357,7 @@ namespace BewerbungsApp
                     if (CheckForYesOrNo(Console.ReadLine()!))
                     {
                         pname[0].Kill();
-                        gui = false;
+                        Gui = false;
                         Return(3);
                     }
                     else
@@ -345,11 +377,6 @@ namespace BewerbungsApp
                 GUI();
             }
         }
-        private static bool CheckForYesOrNo (string input)
-        {
-            return input.ToUpper().Contains('Y') ? true : false;
-        }
-
         private static void Communication ()
         {
             pos = 5;
@@ -362,8 +389,8 @@ namespace BewerbungsApp
             Console.Write(langItems[0]);
             string input = CheckInput();
         }
-
-
+        #endregion
+        #region Check for inputs
         private static string CheckInput ()
         {
             string? checkInput = Console.ReadLine();
@@ -451,42 +478,13 @@ namespace BewerbungsApp
 
             return checkInput!;
         }
-
-        private static void Help()
+        private static bool CheckForYesOrNo(string input)
         {
-            string helpMsg = "\n/******************** Hilfe / Help ********************\n";
-            if (pos == 0)
-            {
-                helpMsg +=
-                " * \n" +
-                " * Liste aller Befehle:\n" +
-                " * Sprache -WERT | Sprache ändern\n" +
-                " * Menu          | Öffnet das Hauptfenster mit allen Funktionen\n" +
-                " * Zuruck        | Springt eine Seite zurück\n" +
-                " * Exit          | Beendet die Anwendung\n" +
-                " * \n" +
-                " * List of all commands:\n" +
-                " * Lang -VALUE   | Change the language\n" +
-                " * Menu          | Opens the menu with all functions\n" +
-                " * Return        | Jumps back one page\n" +
-                " * Exit          | Closes the application\n" +
-                " * ";
-            }
-            else
-            {
-                helpMsg += " * \n";
-                    for (int i = 0; i < 5; i++)
-                {
-                    helpMsg += langItems[langItems.Length - 5 + i] + "\n";
-                }
-                helpMsg += " * ";
-            }
-            helpMsg += "\n ********************* Ende / End *********************/\n";
-
-            Console.WriteLine(helpMsg);
+            return input.ToUpper().Contains('Y');
         }
-
-        private static void PostMessage (int value)
+        #endregion
+        #region Other Methods
+        internal static void PostMessage (int value)
         {
             switch (value)
             {
@@ -536,8 +534,20 @@ namespace BewerbungsApp
                     Console.Clear();
                     Console.WriteLine("/************************ DB **************************/\n");
                     Console.WriteLine($"Hardcoded Database has been loaded: {databaseName}");
-                    Console.WriteLine("ID  |Vorname       |Nachname        |Email                     |Handy           |Stadt-Plz |Strasse             ");
-                    Console.WriteLine("====|==============|================|==========================|================|==========|====================");
+                    DatabaseContent();
+                    break;
+
+                case 22:
+                    Console.Clear();
+                    Console.WriteLine("/************************ DB **************************/\n");
+                    DatabaseContent();
+                    Console.Write(Environment.NewLine);
+
+                    for (int i = 0; i < 4; i++)
+                    {
+                        Console.WriteLine(langItems[19 + i]);
+                    }
+                    Console.Write(Environment.NewLine);
                     break;
 
                 case 3:
@@ -565,7 +575,49 @@ namespace BewerbungsApp
                     break;
             }
         }
+        private static void DatabaseContent ()
+        {
+            Console.WriteLine($"Database: {databaseName}");
+            Console.WriteLine("ID  |Vorname       |Nachname        |Email                           |Handy            |Plz       |Strasse             ");
+            Console.WriteLine("====|==============|================|================================|=================|==========|====================");
+            if (DB.Count <= 0)
+            {
+                Console.WriteLine("No items found");
+                return;
+            }
 
+            for (int i = 0; i < DB.Count; i++)
+            {
+                string tempid = DB.Items[i].Id.ToString();
+                if (tempid.Length < 4) tempid = tempid.PadRight(4, ' ');
+
+                string tempvorname = DB.Items[i].Vorname;
+                if (tempvorname.Length < 14) tempvorname = tempvorname.PadRight(14, ' ');
+                else if (tempvorname.Length > 14) tempvorname = tempvorname[..14];
+
+                string tempnachname = DB.Items[i].Nachname;
+                if (tempnachname.Length < 16) tempnachname = tempnachname.PadRight(16, ' ');
+                else if (tempnachname.Length > 16) tempnachname = tempnachname[..16];
+
+                string tempemail = DB.Items[i].Email;
+                if (tempemail.Length < 32) tempemail = tempemail.PadRight(32, ' ');
+                else if (tempemail.Length > 32) tempemail = tempemail[..32];
+
+                string temphandy = DB.Items[i].Handy.ToString();
+                if (temphandy.Length < 17) temphandy = temphandy.PadRight(17, ' ');
+                else if (temphandy.Length > 17) temphandy = temphandy[..17];
+
+                string tempstadtplz = DB.Items[i].Townplz.ToString();
+                if (tempstadtplz.Length < 10) tempstadtplz = tempstadtplz.PadRight(10, ' ');
+                else if (tempstadtplz.Length > 10) tempstadtplz = tempstadtplz[..10];
+
+                string tempstrasse = DB.Items[i].Strasse;
+                if (tempstrasse.Length < 20) tempstrasse = tempstrasse.PadRight(20, ' ');
+                else if (tempstrasse.Length > 20) tempstrasse = tempstrasse[..20];
+
+                Console.WriteLine($"{tempid}|{tempvorname}|{tempnachname}|{tempemail}|{temphandy}|{tempstadtplz}|{tempstrasse}");
+            }
+        }
         private static void Return (int value)
         {
             if (value >= 3 && value <= 6)
@@ -573,6 +625,62 @@ namespace BewerbungsApp
                 PostMessage(1);
                 ShowAllFunctions();
             }
-        }       
+            if (value >= 30)
+            {
+                PostMessage(2);
+                Database();
+            }
+        }
+        private static void Help()
+        {
+            string helpMsg = "\n/******************** Hilfe / Help ********************\n";
+            if (pos == 0)
+            {
+                helpMsg +=
+                " * \n" +
+                " * Liste aller Befehle:\n" +
+                " * Sprache -WERT | Sprache ändern\n" +
+                " * Menu          | Öffnet das Hauptfenster mit allen Funktionen\n" +
+                " * Zuruck        | Springt eine Seite zurück\n" +
+                " * Exit          | Beendet die Anwendung\n" +
+                " * \n" +
+                " * List of all commands:\n" +
+                " * Lang -VALUE   | Change the language\n" +
+                " * Menu          | Opens the menu with all functions\n" +
+                " * Return        | Jumps back one page\n" +
+                " * Exit          | Closes the application\n" +
+                " * ";
+            }
+            else
+            {
+                helpMsg += " * \n";
+                for (int i = 0; i < 5; i++)
+                {
+                    helpMsg += langItems[langItems.Length - 5 + i] + "\n";
+                }
+                helpMsg += " * ";
+            }
+            helpMsg += "\n ********************* Ende / End *********************/\n";
+
+            Console.WriteLine(helpMsg);
+        }
+
+        #endregion
+        #region Communication to GUI
+        private void OpenListener()
+        {
+            TcpListenerv4 = new TcpListener(IPAddress.Loopback, 50001);
+            TcpListenerv6 = new TcpListener(IPAddress.IPv6Loopback, 50001);
+        }
+        private void SendMessageToGUI(string message)
+        {
+
+        }
+        private void CloseListener ()
+        {
+            TcpListenerv4?.Stop();
+            TcpListenerv6?.Stop();
+        }
+        #endregion
     }
 }

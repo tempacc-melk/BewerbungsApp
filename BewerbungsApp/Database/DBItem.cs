@@ -57,18 +57,17 @@ namespace BewerbungsApp.Database
             townplz = ushort.Parse(dir["TownPLZ"]);
             strasse = dir["Strasse"];
         }
-        internal DBItem() { }
-        internal DBItem(byte newid, string newvorname, string newnachname, string newemail, ulong newhandy, ushort newtownplz, string newstrasse)
+        internal DBItem(string newvorname, string newnachname, string newemail, ulong newhandy, ushort newtownplz, string newstrasse)
         {
-            Id = newid;
-            Vorname = newvorname;
-            Nachname = newnachname;
-            Email = newemail;
+            Id = (byte)(DB.Count);
+            Vorname = string.IsNullOrEmpty(newvorname) ? "" : newvorname;
+            Nachname = string.IsNullOrEmpty(newnachname) ? "" : newnachname;
+            Email = string.IsNullOrEmpty(newemail) ? "" : newemail;
             Handy = newhandy;
             Townplz = newtownplz;
-            Strasse = newstrasse;
+            Strasse = string.IsNullOrEmpty(newstrasse) ? "" : newstrasse;
         }
-        
+
         internal string Clear ()
         {
             Id = 0;

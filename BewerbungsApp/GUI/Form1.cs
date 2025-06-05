@@ -13,5 +13,17 @@ namespace BewerbungsAppGUI
         {
             Application.Exit();
         }
+
+        internal void ChangeLabel (Label label, string text)
+        {
+            if (label.InvokeRequired)
+            {
+                label.Invoke(new MethodInvoker(delegate { label.Text = text; }));
+            } 
+            else
+            {
+                label.Text = text;
+            }
+        }
     }
 }
